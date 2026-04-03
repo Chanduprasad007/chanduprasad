@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chandu.AI | AI Automation & CX Leader</title>
+    
+    <!-- Google Fonts for High-Tech Aesthetic -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* SlaqAI & Gamified Cyberpunk Theme Variables */
+        :root {
+            --bg-base: #050505;
+            --surface-card: #111111;
+            --surface-hover: #1a1a1a;
+            --border-color: #222222;
+            --text-main: #ffffff;
+            --text-muted: #999999;
+            --ai-accent: #00E5FF; /* Neon Cyan */
+            --ai-glow: rgba(0, 229, 255, 0.4);
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Subtle Retro Scanline Grid Background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navbar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--ai-accent);
+            text-shadow: 0 0 10px var(--ai-glow);
+        }
+
+        .nav-links a {
+            margin-left: 24px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--text-main); }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 90px 0 60px;
+        }
+
+        .hero .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid var(--ai-accent);
+            color: var(--ai-accent);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            border-radius: 30px;
+            margin-bottom: 24px;
+            animation: pulse 2s infinite;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            line-height: 1.1;
+            margin: 0 0 20px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 750px;
+            margin: 0 auto 40px;
+        }
+
+        .hero p strong { color: var(--text-main); }
+
+        .btn {
+            display: inline-block;
+            background: var(--ai-accent);
+            color: #000;
+            padding: 14px 28px;
+            font-weight: 700;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px var(--ai-glow);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px var(--ai-glow);
+        }
+
+        .btn-outline {
+            display: inline-block;
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 14px 28px;
+            font-weight: 600;
+            border-radius: 4px;
+            margin-left: 15px;
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            border-color: var(--text-main);
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Terminal Window */
+        .terminal {
+            background: #000;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            color: #27c93f;
+            margin-bottom: 80px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+        .terminal-header {
+            border-bottom: 1px solid #333;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 8px;
+        }
+        .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-r { background: #ff5f56; }
+        .dot-y { background: #ffbd2e; }
+        .dot-g { background: #27c93f; }
+        .prompt { color: var(--ai-accent); }
+        .terminal p { margin: 8px 0; }
+
+        /* Section Titles */
+        .section-title {
+            font-family: var(--font-mono);
+            font-size: 1.6rem;
+            color: var(--text-main);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+        }
+        .section-title::before {
+            content: '★';
+            color: var(--ai-accent);
+        }
+
+        /* Grid Cards (Services/Core Competencies) */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+
+        .card {
+            background: var(--surface-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 32px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .card:hover {
+            border-color: var(--ai-accent);
+            transform: translateY(-6px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.05);
+        }
+        .card h3 {
+            font-size: 1.3rem;
+            margin: 0 0 16px;
+            color: var(--text-main);
+        }
+        .card p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Gamified Quest Log (Experience) */
+        .timeline {
+            border-left: 2px solid var(--border-color);
+            padding-left: 40px;
+            margin-bottom: 80px;
+            margin-left: 10px;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -47px;
+            top: 2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg-base);
+            border: 2px solid var(--ai-accent);
+            box-shadow: 0 0 10px var(--ai-glow);
+        }
+        .timeline-item h3 {
+            font-size: 1.4rem;
+            color: var(--ai-accent);
+            margin: 0 0 6px;
+        }
+        .timeline-meta {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            display: inline-block;
+            background: #111;
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid #333;
+        }
+        .timeline-item ul {
+            padding-left: 20px;
+            color: var(--text-muted);
+        }
+        .timeline-item li {
+            margin-bottom: 12px;
+        }
+        .timeline-item li strong { color: var(--text-main); }
+
+        /* Inventory (Skills) */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 80px;
+        }
+        .skill-pill {
+            background: var(--surface-card);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: all 0.3s;
+        }
+        .skill-pill.ai-core {
+            border-color: var(--ai-accent);
+            color: var(--ai-accent);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.15);
+            background: rgba(0, 229, 255, 0.03);
+        }
+        .skill-pill:hover {
+            background: var(--surface-hover);
+            color: var(--text-main);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 60px;
+        }
+        footer h2 { margin: 0 0 24px; font-size: 2rem; }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(0, 229, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0); }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.6rem; }
+            .btn-outline { margin-left: 0; margin-top: 16px; display: block; }
+            .btn { display: block; }
+            .timeline { padding-left: 20px; }
+            .timeline-item::before { left: -27px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- NAVBAR -->
+    <header>
+        <div class="logo">Chandu.AI</div>
+        <div class="nav-links">
+            <a href="#services">Features</a>
+            <a href="#quests">Quest Log</a>
+            <a href="#inventory">Tech Stack</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="badge">🤖 AI-Enhanced Player Profile</div>
+        <h1>Automate the Work.<br>Amplify the CX.</h1>
+        <p>Stop Doing Manually What AI Can Do Automatically. I am a Level 6+ Customer Experience Leader blending deep fintech support knowledge with powerful <strong>Agentic AI</strong> and <strong>Workflow Automations</strong>.</p>
+        <div class="actions">
+            <a href="mailto:tschanduprasad@gmail.com" class="btn">Deploy Chandu.AI (Hire Me)</a>
+            <a href="https://www.linkedin.com/in/chandu-prasad-t-s-b57839a9/" target="_blank" class="btn-outline">View LinkedIn Network</a>
+        </div>
+    </section>
+
+    <!-- BOOT SEQUENCE TERMINAL (GAMIFIED) -->
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-dot dot-r"></div>
+            <div class="terminal-dot dot-y"></div>
+            <div class="terminal-dot dot-g"></div>
+        </div>
+        <p><span class="prompt">guest@chandu.ai:~$</span> ./init_profile.sh --verbose</p>
+        <p>> Loading attributes...</p>
+        <p>> [CLASS]: CX Support Operations Architect</p>
+        <p>>[EXPERIENCE]: 6+ Years (Fintech, B2B, Escalation Management)</p>
+        <p>>[LOCATION]: Bengaluru, India (+91 9164567759)</p>
+        <p>>[SYSTEM STATUS]: Ready to scale internal tools and debug workflows.</p>
+    </div>
+
+    <!-- SERVICES / CORE COMPETENCIES -->
+    <h2 class="section-title" id="services">What I Build For You</h2>
+    <div class="grid-3">
+        <div class="card">
+            <h3>⚡ AI Workflow Automation</h3>
+            <p>I design end-to-end automation workflows that drastically reduce manual intervention. From proactive user pain-point resolution to support escalations — I automate it.</p>
+        </div>
+        <div class="card">
+            <h3>🤖 Unified CRM Systems</h3>
+            <p>I drive support ops improvements by integrating tools like DevRev, Intercom, and Slack into cohesive, real-time alerting systems for critical cases.</p>
+        </div>
+        <div class="card">
+            <h3>🛡️ Advanced Troubleshooting</h3>
+            <p>I act as the SPOC during major production incidents. I rapidly reproduce bugs, align with engineering, and ensure strict SLA compliance.</p>
+        </div>
+    </div>
+
+    <!-- QUEST LOG (EXPERIENCE) -->
+    <h2 class="section-title" id="quests">Mission History / Quest Log</h2>
+    <div class="timeline">
+        
+        <!-- Job 1 -->
+        <div class="timeline-item">
+            <h3>Assistant Manager, Customer Support</h3>
+            <div class="timeline-meta">📍 smallcase Technologies Pvt Ltd &nbsp;|&nbsp; ⏱️ 01/2023 – Current &nbsp;|&nbsp;[ACTIVE QUEST]</div>
+            <ul>
+                <li><strong>AI Integration:</strong> Designed and implemented AI-based workflow automations for support escalations, enabling proactive issue resolution.</li>
+                <li><strong>System Architecture:</strong> Drove operations improvements by integrating multiple channels into a unified DevRev CRM and building Slack-based alerting systems.</li>
+                <li><strong>AI Pioneering:</strong> Pioneered the adoption of AI tools across the team, educating colleagues and optimizing workflows for faster case resolution.</li>
+                <li><strong>Incident SPOC:</strong> Acted as Subject Matter Expert for the internal "smallboard" tool, resolving bugs and providing hands-on rapid troubleshooting during major outages.</li>
+            </ul>
+        </div>
+
+        <!-- Job 2 -->
+        <div class="timeline-item">
+            <h3>Senior Customer Support Specialist</h3>
+            <div class="timeline-meta">📍 smallcase Technologies Pvt Ltd &nbsp;|&nbsp; ⏱️ 01/2021 – 01/2023 &nbsp;|&nbsp; [QUEST CLEARED]</div>
+            <ul>
+                <li><strong>Mentorship:</strong> Directed and mentored junior associates handling complex queries and process escalations.</li>
+                <li><strong>Data Analytics:</strong> Delivered detailed weekly/monthly metrics reports for senior management, tracking CX and support KPIs.</li>
+                <li><strong>Process Optimization:</strong> Managed support SOPs, ensuring process consistency and reducing repeat queries by collaborating with product engineers.</li>
+            </ul>
+        </div>
+
+        <!-- Job 3 -->
+        <div class="timeline-item">
+            <h3>Operations Associate</h3>
+            <div class="timeline-meta">📍 Dunzo &nbsp;|&nbsp; ⏱️ 04/2019 – 01/2021 &nbsp;|&nbsp;[QUEST CLEARED]</div>
+            <ul>
+                <li>Resolved client tickets efficiently and produced reports aligned to company goals.</li>
+                <li><strong>Achievement Unlocked:</strong> Earned 'Best Employee' recognition for three consecutive months.</li>
+            </ul>
+        </div>
+
+        <!-- Job 4 -->
+        <div class="timeline-item">
+            <h3>Vice Captain, Aero Design Team</h3>
+            <div class="timeline-meta">📍 Team Arcis &nbsp;|&nbsp; ⏱️ 08/2016 – 07/2018 &nbsp;|&nbsp; [SIDE QUEST]</div>
+            <ul>
+                <li>Led university aero design team, coordinating design, build, and analysis of RC aircraft.</li>
+                <li><strong>Achievement Unlocked:</strong> Directed the team to win several global medals in the SAE Aerodesign International Competition.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- INVENTORY / TECH STACK -->
+    <h2 class="section-title" id="inventory">Inventory & Modules Loader</h2>
+    <div class="skills-container">
+        <!-- AI Core Skills glowing to stand out -->
+        <div class="skill-pill ai-core">🔥 Prompt Engineering</div>
+        <div class="skill-pill ai-core">🤖 Agentic AI Integrations</div>
+        <div class="skill-pill ai-core">⚡ Workflow Automation</div>
+        
+        <!-- Tech Stack -->
+        <div class="skill-pill">DevRev</div>
+        <div class="skill-pill">Intercom</div>
+        <div class="skill-pill">Freshworks</div>
+        <div class="skill-pill">Help Scout</div>
+        <div class="skill-pill">Mixpanel</div>
+        <div class="skill-pill">ClickUp</div>
+        <div class="skill-pill">Jira</div>
+        <div class="skill-pill">Redash</div>
+        <div class="skill-pill">Technical Troubleshooting</div>
+        <div class="skill-pill">Escalation Management</div>
+    </div>
+
+    <!-- GUILDS & UPGRADES (EDUCATION & CERTS) -->
+    <h2 class="section-title">Guilds & Upgrades</h2>
+    <div class="grid-3" style="margin-bottom: 20px;">
+        <div class="card">
+            <h3>🎓 Visvesvaraya Guild</h3>
+            <p><strong>B.E.: Aeronautical Engineering</strong><br>Visvesvaraya Technological University</p>
+        </div>
+        <div class="card">
+            <h3>📜 AI & Data Certifications</h3>
+            <p style="line-height: 2;">
+                • Data Engineering Foundations<br>
+                • Outskill.io AI Workshop<br>
+                • SQL Essential Training<br>
+                • AZ-900 (Microsoft Azure)
+            </p>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <h2>Not Sure Where to Start? Let's Talk.</h2>
+        <p style="color: var(--text-muted); margin-bottom: 30px;">Whether you're exploring AI for your support ops or looking for a seasoned CX leader.</p>
+        <a href="mailto:tschanduprasad@gmail.com" class="btn">Initiate Contact Protocol</a>
+        <p style="margin-top: 50px; font-family: var(--font-mono); font-size: 0.85rem; color: #444;">
+            © 2026 Chandu.AI. All systems operational.
+        </p>
+    </footer>
+
+</div>
+
+</body>
+</html>
